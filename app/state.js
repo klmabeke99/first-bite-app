@@ -3,6 +3,7 @@ const STORAGE_KEY = "firstBiteState_v1";
 const defaultState = {
   task: "",
   emotion: "overwhelmed",
+  sessionsCompleted: 0,
 };
 
 export function getState() {
@@ -25,4 +26,14 @@ export function setState(patch) {
 export function resetState() {
   localStorage.removeItem(STORAGE_KEY);
 }
+
+/* 👇 ADD IT HERE — AT THE VERY BOTTOM */
+
+export function incrementSessions() {
+  const current = getState();
+  const nextCount = (current.sessionsCompleted || 0) + 1;
+  setState({ sessionsCompleted: nextCount });
+  return nextCount;
+}
+
 
