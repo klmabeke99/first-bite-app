@@ -1,5 +1,6 @@
 import { renderStartScreen } from "../screens/start.js";
 import { renderQuestionsScreen } from "../screens/questions.js";
+import { renderResultsScreen } from "../screens/results.js";
 
 function getRoute() {
   return window.location.hash || "#/start";
@@ -18,7 +19,11 @@ function renderRoute() {
     return;
   }
 
-  // fallback
+  if (route === "#/results") {
+    renderResultsScreen();
+    return;
+  }
+
   window.location.hash = "#/start";
 }
 
