@@ -1,5 +1,8 @@
+import { setState, getState } from "../app/state.js";
+
 export function renderQuestionsScreen() {
   const app = document.getElementById("app");
+  const state = getState();
 
   app.innerHTML = `
     <section class="card">
@@ -7,7 +10,7 @@ export function renderQuestionsScreen() {
       <p class="p">Keep it simple. One task. One feeling. That’s enough.</p>
 
       <label class="label" for="taskInput">Your task</label>
-      <input class="input" id="taskInput" type="text" placeholder="e.g., Reply to the email" />
+      <input class="input" id="taskInput" type="text" placeholder="e.g., Reply to the email" value="${escapeHtml(state.task)}" />
 
       <label class="label" for="emotionSelect">What feeling shows up?</label>
       <select class="select" id="emotionSelect">
@@ -27,6 +30,9 @@ export function renderQuestionsScreen() {
     </section>
   `;
 
+  // Set selected value after render
+  document.getElementById("emotionSelect").value = state.emotion || "overwhelmed";
+
   document.getElementById("backBtn").addEventListener("click", () => {
     window.location.hash = "#/start";
   });
@@ -40,10 +46,17 @@ export function renderQuestionsScreen() {
       return;
     }
 
-    // TEMP for now — next step we’ll save this to state.js/localStorage
-    console.log({ task, emotion });
-
-    alert("Great. Next step: we’ll generate your plan on the Results screen.");
+    setState({ task, emotion });
+    window.location.hash = "#/results";
   });
+}
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
