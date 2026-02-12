@@ -24,8 +24,8 @@ export function renderStartScreen() {
 
   const startBtn = document.getElementById("startBtn");
   startBtn.addEventListener("click", () => {
-    // Next screen will be added later
-    alert("Nice. Next step: we will build the Questions screen.");
-  });
+  window.location.hash = "#/questions";
+});
+
 }
 
