@@ -43,9 +43,10 @@ export function renderResultsScreen() {
     window.location.hash = "#/questions";
   });
 
-  document.getElementById("focusBtn").addEventListener("click", () => {
-    alert("Next step: we’ll build the Focus Timer screen.");
-  });
+document.getElementById("focusBtn").addEventListener("click", () => {
+  window.location.hash = "#/focus";
+});
+
 
   document.getElementById("resetBtn").addEventListener("click", () => {
     resetState();
