@@ -1,3 +1,4 @@
+import { renderFocusScreen } from "../screens/focus.js";
 import { renderStartScreen } from "../screens/start.js";
 import { renderQuestionsScreen } from "../screens/questions.js";
 import { renderResultsScreen } from "../screens/results.js";
@@ -24,6 +25,11 @@ function renderRoute() {
     return;
   }
 
+  if (route === "#/focus") {
+    renderFocusScreen();
+    return;
+  }
+
   window.location.hash = "#/start";
 }
 
@@ -31,3 +37,4 @@ export function initRouter() {
   renderRoute();
   window.addEventListener("hashchange", renderRoute);
 }
+
