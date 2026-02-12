@@ -1,4 +1,4 @@
-import { getState } from "../app/state.js";
+import { getState, incrementSessions } from "../app/state.js";
 
 let timerId = null;
 
@@ -7,6 +7,7 @@ export function renderFocusScreen() {
   const { task } = getState();
 
   const totalSeconds = 5 * 60;
+  let remaining = totalSeconds;
 
   app.innerHTML = `
     <section class="card">
@@ -19,11 +20,20 @@ export function renderFocusScreen() {
 
       <div class="timer">
         <div class="timer__time" id="timeDisplay">05:00</div>
+
         <div class="row">
           <button class="btn" id="startTimerBtn">Start Timer</button>
           <button class="btn secondary" id="pauseTimerBtn">Pause</button>
           <button class="btn secondary" id="resetTimerBtn">Reset</button>
         </div>
+
+        <div class="row" id="extraActions" style="display:none;">
+          <button class="btn" id="plusFiveBtn">+ 5 more minutes</button>
+          <button class="btn secondary" id="doneBtn">Done for now</button>
+        </div>
+
+        <p class="p" id="statusMsg" style="display:none;"></p>
+        <p class="small" id="sessionMsg" style="display:none;"></p>
       </div>
 
       <hr class="hr" />
@@ -36,20 +46,40 @@ export function renderFocusScreen() {
     </section>
   `;
 
-  // Wire buttons
-  let remaining = totalSeconds;
-
   const timeDisplay = document.getElementById("timeDisplay");
   const startBtn = document.getElementById("startTimerBtn");
   const pauseBtn = document.getElementById("pauseTimerBtn");
   const resetBtn = document.getElementById("resetTimerBtn");
+  const extraActions = document.getElementById("extraActions");
+  const plusFiveBtn = document.getElementById("plusFiveBtn");
+  const doneBtn = document.getElementById("doneBtn");
+  const statusMsg = document.getElementById("statusMsg");
+  const sessionMsg = document.getElementById("sessionMsg");
 
   function renderTime() {
     timeDisplay.textContent = formatTime(remaining);
   }
 
+  function showCompleteUI() {
+    extraActions.style.display = "flex";
+    statusMsg.style.display = "block";
+    sessionMsg.style.display = "block";
+
+    statusMsg.textContent = "Nice work. You showed up for 5 minutes ✅";
+    const count = incrementSessions();
+    sessionMsg.textContent = `Sessions completed: ${count}`;
+  }
+
+  function hideCompleteUI() {
+    extraActions.style.display = "none";
+    statusMsg.style.display = "none";
+    sessionMsg.style.display = "none";
+  }
+
   function startTimer() {
-    if (timerId) return; // already running
+    if (timerId) return;
+
+    hideCompleteUI();
 
     timerId = setInterval(() => {
       remaining -= 1;
@@ -59,7 +89,7 @@ export function renderFocusScreen() {
         stopTimer();
         remaining = 0;
         renderTime();
-        alert("Time’s up ✅ Want to do 5 more minutes?");
+        showCompleteUI();
       }
     }, 1000);
   }
@@ -75,18 +105,30 @@ export function renderFocusScreen() {
     stopTimer();
     remaining = totalSeconds;
     renderTime();
+    hideCompleteUI();
   }
 
   startBtn.addEventListener("click", startTimer);
   pauseBtn.addEventListener("click", stopTimer);
   resetBtn.addEventListener("click", resetTimer);
 
+  plusFiveBtn.addEventListener("click", () => {
+    // Add 5 minutes more and continue
+    remaining = 5 * 60;
+    renderTime();
+    hideCompleteUI();
+    startTimer();
+  });
+
+  doneBtn.addEventListener("click", () => {
+    window.location.hash = "#/results";
+  });
+
   document.getElementById("backBtn").addEventListener("click", () => {
     stopTimer();
     window.location.hash = "#/results";
   });
 
-  // Initial render
   renderTime();
 }
 
@@ -104,4 +146,3 @@ function escapeHtml(str) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
-
