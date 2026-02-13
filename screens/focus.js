@@ -7,7 +7,9 @@ export function renderFocusScreen() {
   const { task } = getState();
 
   const totalSeconds = 5 * 60;
-  let remaining = totalSeconds;
+  const saved = getState();
+  let remaining = Number.isFinite(saved.focusRemaining) ? saved.focusRemaining : totalSeconds;
+
 
   app.innerHTML = `
     <section class="card">
