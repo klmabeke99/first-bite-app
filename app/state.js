@@ -3,6 +3,7 @@ const STORAGE_KEY = "firstBiteState_v1";
 const defaultState = {
   task: "",
   emotion: "overwhelmed",
+  energy: "medium",
   sessionsCompleted: 0,
   streakDays: 0,
   lastSessionDate: null,
