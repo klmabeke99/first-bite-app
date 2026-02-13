@@ -5,9 +5,12 @@ const defaultState = {
   emotion: "overwhelmed",
   sessionsCompleted: 0,
 
+  streakDays: 0,
+  lastStreakDate: null,
+
   focusRemaining: 300,
   focusRunning: false,
-  focusLastTick: null
+  focusLastTick: null,
 };
 
 
