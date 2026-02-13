@@ -29,7 +29,11 @@ const { task, emotion, sessionsCompleted, streakDays } = getState();
       <p class="p"><strong>Gentle reframe:</strong> ${escapeHtml(plan.reframe)}</p>
      <p class="small">Sessions completed so far: ${sessionsCompleted || 0}</p>
      <p class="small">Current streak: ${streakDays || 0} day${(streakDays || 0) === 1 ? "" : "s"}</p>
+     <p class="small" style="opacity:.75;">
+     Streak counts once per day. Missing a day resets gently — no pressure.
+     </p>
 
+    <div class="row">
 
       <div class="row">
         <button class="btn secondary" id="backBtn">Back</button>
