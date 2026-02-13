@@ -1,4 +1,4 @@
-import { getState, incrementSessions } from "../app/state.js";
+import { getState, setState, incrementSessions } from "../app/state.js";
 
 let timerId = null;
 
