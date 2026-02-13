@@ -7,9 +7,10 @@ export function renderFocusScreen() {
   const { task } = getState();
 
   const totalSeconds = 5 * 60;
+
+  // Load saved remaining seconds (persistence)
   const saved = getState();
   let remaining = Number.isFinite(saved.focusRemaining) ? saved.focusRemaining : totalSeconds;
-
 
   app.innerHTML = `
     <section class="card">
@@ -22,13 +23,12 @@ export function renderFocusScreen() {
 
       <div class="timer">
         <div class="ringWrap">
-  <div class="ring" id="ring">
-    <div class="ringInner">
-      <div class="timer__time" id="timeDisplay">05:00</div>
-    </div>
-  </div>
-</div>
-
+          <div class="ring" id="ring">
+            <div class="ringInner">
+              <div class="timer__time" id="timeDisplay">05:00</div>
+            </div>
+          </div>
+        </div>
 
         <div class="row">
           <button class="btn" id="startTimerBtn">Start Timer</button>
@@ -67,23 +67,24 @@ export function renderFocusScreen() {
   const sessionMsg = document.getElementById("sessionMsg");
 
   function renderTime() {
-  timeDisplay.textContent = formatTime(remaining);
+    timeDisplay.textContent = formatTime(remaining);
 
-  // Progress from 0 → 1 (time used)
-  const used = totalSeconds - remaining;
-  const progress = Math.min(Math.max(used / totalSeconds, 0), 1);
-  const deg = Math.round(progress * 360);
+    // Progress from 0 → 1 (time used)
+    const used = totalSeconds - remaining;
+    const progress = Math.min(Math.max(used / totalSeconds, 0), 1);
+    const deg = Math.round(progress * 360);
 
-  // Fill ring gently as time passes
- ring.style.background = `conic-gradient(var(--ringFill) ${deg}deg, var(--ringTrack) ${deg}deg)`;
-}
+    // Fill ring gently as time passes
+    ring.style.background = `conic-gradient(var(--ringFill) ${deg}deg, var(--ringTrack) ${deg}deg)`;
+  }
+
   function persist(running) {
-  setState({
-    focusRemaining: remaining,
-    focusRunning: running,
-    focusLastTick: running ? Date.now() : null,
-  });
-}
+    setState({
+      focusRemaining: remaining,
+      focusRunning: running,
+      focusLastTick: running ? Date.now() : null,
+    });
+  }
 
   function showCompleteUI() {
     extraActions.style.display = "flex";
@@ -101,51 +102,50 @@ export function renderFocusScreen() {
     sessionMsg.style.display = "none";
   }
 
-function startTimer() {
-  if (timerId) return;
+  function startTimer() {
+    if (timerId) return;
 
-  hideCompleteUI();
-  ring.classList.add("breathing");
-  persist(true);
-
-  timerId = setInterval(() => {
-    remaining -= 1;
-    renderTime();
+    hideCompleteUI();
+    ring.classList.add("breathing");
     persist(true);
 
-    if (remaining <= 0) {
-      stopTimer();
-      remaining = 0;
+    timerId = setInterval(() => {
+      remaining -= 1;
       renderTime();
-      showCompleteUI();
-    }
-  }, 1000);
-}
+      persist(true);
 
-function stopTimer() {
-  if (timerId) {
-    clearInterval(timerId);
-    timerId = null;
+      if (remaining <= 0) {
+        stopTimer();
+        remaining = 0;
+        renderTime();
+        showCompleteUI();
+      }
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
     ring.classList.remove("breathing");
     persist(false);
   }
-}
 
-function resetTimer() {
-  stopTimer();
-  remaining = totalSeconds;
-  renderTime();
-  hideCompleteUI();
-  persist(false);
-}
+  function resetTimer() {
+    stopTimer();
+    remaining = totalSeconds;
+    renderTime();
+    hideCompleteUI();
+    persist(false);
+  }
 
-
+  // Button events
   startBtn.addEventListener("click", startTimer);
   pauseBtn.addEventListener("click", stopTimer);
   resetBtn.addEventListener("click", resetTimer);
 
   plusFiveBtn.addEventListener("click", () => {
-    // Add 5 minutes more and continue
     remaining = 5 * 60;
     renderTime();
     hideCompleteUI();
@@ -153,6 +153,7 @@ function resetTimer() {
   });
 
   doneBtn.addEventListener("click", () => {
+    stopTimer();
     window.location.hash = "#/results";
   });
 
@@ -161,9 +162,10 @@ function resetTimer() {
     window.location.hash = "#/results";
   });
 
+  // Initial render
   renderTime();
-    // If the timer was running and the user refreshed,
-  // subtract the time that passed and continue gently.
+
+  // Resume after refresh if it was running
   const st = getState();
   if (st.focusRunning && st.focusLastTick) {
     const elapsed = Math.floor((Date.now() - st.focusLastTick) / 1000);
@@ -172,7 +174,10 @@ function resetTimer() {
 
     if (remaining > 0) startTimer();
     else showCompleteUI();
+  }
 }
+
+// Helpers (MUST be outside renderFocusScreen)
 
 function formatTime(seconds) {
   const m = Math.floor(seconds / 60);
