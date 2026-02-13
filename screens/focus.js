@@ -95,6 +95,8 @@ export function renderFocusScreen() {
     if (timerId) return;
 
     hideCompleteUI();
+    ring.classList.add("breathing");
+
 
     timerId = setInterval(() => {
       remaining -= 1;
@@ -113,6 +115,8 @@ export function renderFocusScreen() {
     if (timerId) {
       clearInterval(timerId);
       timerId = null;
+      ring.classList.remove("breathing");
+
     }
   }
 
@@ -121,6 +125,8 @@ export function renderFocusScreen() {
     remaining = totalSeconds;
     renderTime();
     hideCompleteUI();
+    ring.classList.remove("breathing");
+
   }
 
   startBtn.addEventListener("click", startTimer);
