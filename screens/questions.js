@@ -13,6 +13,10 @@ export function renderQuestionsScreen() {
 
       <label class="label" for="taskInput">Your task</label>
       <input class="input" id="taskInput" type="text" placeholder="e.g., Reply to the email" value="${escapeHtml(state.task)}" />
+      <p class="small" id="taskError" style="display:none; color: rgba(17,24,39,.65); margin-top:6px;">
+  Please type a task (even a short one)
+</p>
+
 
       <label class="label" for="emotionSelect">What feeling shows up?</label>
      <select class="select" id="emotionSelect">
@@ -54,11 +58,23 @@ export function renderQuestionsScreen() {
   document.getElementById("nextBtn").addEventListener("click", () => {
     const task = document.getElementById("taskInput").value.trim();
     const emotion = document.getElementById("emotionSelect").value;
+    const taskError = document.getElementById("taskError");
+   
+   taskInput.addEventListener("input", () => {
+  if (taskInput.value.trim().length > 0) {
+    taskError.style.display = "none";
+    taskInput.style.outline = "";
+  }
+});
 
-    if (!task) {
-      alert("Please type a task (even a short one).");
-      return;
-    }
+
+if (!task) {
+  taskError.style.display = "block";
+  taskInput.focus();
+  taskInput.style.outline = "2px solid rgba(17,24,39,.25)";
+  return;
+}
+
 
     setState({ task, emotion });
     window.location.hash = "#/results";
