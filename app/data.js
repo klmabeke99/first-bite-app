@@ -48,5 +48,49 @@ export const EMOTION_PROFILES = {
       "Do one more tiny action",
     ],
   },
+  perfectionism: {
+  premium: true,
+  reframe: "Progress beats perfect. Done imperfectly is still done.",
+  firstBite: (task) => `Create a deliberately imperfect version of "${task}". Aim for 60% quality only.`,
+  nextSteps: () => [
+    "Set a 5-minute limit",
+    "Do not edit while creating",
+    "Ship or save when timer ends",
+  ],
+},
+
+avoidance: {
+  premium: true,
+  reframe: "Avoidance fades when exposure begins.",
+  firstBite: (task) => `Open "${task}" and stare at it for 30 seconds. That’s it.`,
+  nextSteps: () => [
+    "Write one messy line",
+    "Stand up and take one breath",
+    "Return and write one more messy line",
+  ],
+},
+
+low_dopamine: {
+  premium: true,
+  reframe: "Motivation follows motion.",
+  firstBite: (task) => `Change your environment before touching "${task}" (stand up, change room, light, or music).`,
+  nextSteps: () => [
+    "Set a 3-minute micro sprint",
+    "Reward yourself with movement",
+    "Repeat once",
+  ],
+},
+
+distracted: {
+  premium: true,
+  reframe: "Attention improves when friction is removed.",
+  firstBite: (task) => `Remove one distraction before starting "${task}". Just one.`,
+  nextSteps: () => [
+    "Put phone in another room",
+    "Close one browser tab",
+    "Start timer immediately",
+  ],
+},
+
 };
 
