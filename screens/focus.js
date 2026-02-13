@@ -73,10 +73,8 @@ export function renderFocusScreen() {
   const deg = Math.round(progress * 360);
 
   // Fill ring gently as time passes
-  ring.style.background = `conic-gradient(#111827 ${deg}deg, rgba(17,24,39,.10) ${deg}deg)`;
+ ring.style.background = `conic-gradient(var(--ringFill) ${deg}deg, var(--ringTrack) ${deg}deg)`;
 }
-
-
   function showCompleteUI() {
     extraActions.style.display = "flex";
     statusMsg.style.display = "block";
