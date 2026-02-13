@@ -166,3 +166,25 @@ body{
   font-weight: 800;
   letter-spacing: 1px;
 }
+/* --- Softer ring colors + breathing --- */
+:root{
+  --ringFill: rgba(17,24,39,.55);
+  --ringTrack: rgba(17,24,39,.10);
+}
+
+.ring{
+  /* default (will still be overridden by JS as it updates) */
+  background: conic-gradient(var(--ringFill) 0deg, var(--ringTrack) 0deg);
+  transition: background 180ms linear;
+}
+
+/* Breathing effect: very subtle scale + shadow */
+@keyframes breathe {
+  0%   { transform: scale(1);   box-shadow: 0 0 0 rgba(0,0,0,0); }
+  50%  { transform: scale(1.01); box-shadow: 0 18px 40px rgba(31,41,55,.10); }
+  100% { transform: scale(1);   box-shadow: 0 0 0 rgba(0,0,0,0); }
+}
+
+.ring.breathing{
+  animation: breathe 2.8s ease-in-out infinite;
+}
