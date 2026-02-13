@@ -69,31 +69,29 @@ ${isPremium() ? `
     window.location.hash = "#/start";
   });
 
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    const task = document.getElementById("taskInput").value.trim();
-    const emotion = document.getElementById("emotionSelect").value;
-    const taskError = document.getElementById("taskError");
-   
-   taskInput.addEventListener("input", () => {
-  if (taskInput.value.trim().length > 0) {
-    taskError.style.display = "none";
-    taskInput.style.outline = "";
+ document.getElementById("nextBtn").addEventListener("click", () => {
+  const taskInput = document.getElementById("taskInput");
+  const task = taskInput.value.trim();
+  const emotion = document.getElementById("emotionSelect").value;
+
+  const taskError = document.getElementById("taskError");
+
+  if (!task) {
+    taskError.style.display = "block";
+    taskInput.focus();
+    return;
   }
+
+  let energy = "medium";
+  const energyEl = document.getElementById("energySelect");
+  if (energyEl) energy = energyEl.value;
+
+  setState({ task, emotion, energy });
+
+  window.location.hash = "#/results";
 });
 
 
-if (!task) {
-  taskError.style.display = "block";
-  taskInput.focus();
-  taskInput.style.outline = "2px solid rgba(17,24,39,.25)";
-  return;
-}
-
-
-    setState({ task, emotion });
-    window.location.hash = "#/results";
-  });
-}
 
 function escapeHtml(str) {
   return String(str || "")
