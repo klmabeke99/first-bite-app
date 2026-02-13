@@ -162,6 +162,16 @@ function resetTimer() {
   });
 
   renderTime();
+    // If the timer was running and the user refreshed,
+  // subtract the time that passed and continue gently.
+  const st = getState();
+  if (st.focusRunning && st.focusLastTick) {
+    const elapsed = Math.floor((Date.now() - st.focusLastTick) / 1000);
+    remaining = Math.max(0, remaining - elapsed);
+    renderTime();
+
+    if (remaining > 0) startTimer();
+    else showCompleteUI();
 }
 
 function formatTime(seconds) {
