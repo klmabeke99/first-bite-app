@@ -131,3 +131,38 @@ body{
   font-weight: 800;
   letter-spacing: 1px;
 }
+/* --- Progress Ring --- */
+.ringWrap{
+  display: grid;
+  place-items: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  margin: 8px 0 2px;
+  position: relative;
+}
+
+.ring{
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  background: conic-gradient(#111827 0deg, rgba(17,24,39,.10) 0deg);
+  display: grid;
+  place-items: center;
+}
+
+.ringInner{
+  width: 126px;
+  height: 126px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+}
+
+.timer__time{
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
