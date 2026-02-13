@@ -101,43 +101,44 @@ export function renderFocusScreen() {
     sessionMsg.style.display = "none";
   }
 
-  function startTimer() {
-    if (timerId) return;
+function startTimer() {
+  if (timerId) return;
 
-    hideCompleteUI();
-    ring.classList.add("breathing");
+  hideCompleteUI();
+  ring.classList.add("breathing");
+  persist(true);
 
-
-    timerId = setInterval(() => {
-      remaining -= 1;
-      renderTime();
-
-      if (remaining <= 0) {
-        stopTimer();
-        remaining = 0;
-        renderTime();
-        showCompleteUI();
-      }
-    }, 1000);
-  }
-
-  function stopTimer() {
-    if (timerId) {
-      clearInterval(timerId);
-      timerId = null;
-      ring.classList.remove("breathing");
-
-    }
-  }
-
-  function resetTimer() {
-    stopTimer();
-    remaining = totalSeconds;
+  timerId = setInterval(() => {
+    remaining -= 1;
     renderTime();
-    hideCompleteUI();
-    ring.classList.remove("breathing");
+    persist(true);
 
+    if (remaining <= 0) {
+      stopTimer();
+      remaining = 0;
+      renderTime();
+      showCompleteUI();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+    ring.classList.remove("breathing");
+    persist(false);
   }
+}
+
+function resetTimer() {
+  stopTimer();
+  remaining = totalSeconds;
+  renderTime();
+  hideCompleteUI();
+  persist(false);
+}
+
 
   startBtn.addEventListener("click", startTimer);
   pauseBtn.addEventListener("click", stopTimer);
