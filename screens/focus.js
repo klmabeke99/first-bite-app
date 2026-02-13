@@ -93,7 +93,9 @@ export function renderFocusScreen() {
 
     statusMsg.textContent = "Nice work. You showed up for 5 minutes ✅";
     const count = incrementSessions();
-    sessionMsg.textContent = `Sessions completed: ${count}`;
+    const streak = applyDailyStreak();
+    sessionMsg.textContent = `Sessions completed: ${count} • Streak: ${streak} day${streak === 1 ? "" : "s"}`;
+
   }
 
   function hideCompleteUI() {
