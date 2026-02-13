@@ -30,6 +30,10 @@ export function renderQuestionsScreen() {
   </optgroup>
 </select>
 
+<p class="small" style="opacity:.8;">
+  Premium unlocks deeper blockers (perfectionism, avoidance, low dopamine, distracted)
+</p>
+
 
       <div class="row">
         <button class="btn secondary" id="backBtn">Back</button>
