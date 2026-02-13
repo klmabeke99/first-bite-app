@@ -3,19 +3,23 @@ import { getState, resetState } from "../app/state.js";
 
 export function renderResultsScreen() {
   const app = document.getElementById("app");
+  
+  const { task, emotion, energy, sessionsCompleted, streakDays } = getState();
 
-  const { task, emotion, sessionsCompleted, streakDays } = getState();
   const plan = buildPlan(task, emotion);
 
   app.innerHTML = `
     <section class="card">
       <h2 class="h2">Your First Bite Plan</h2>
       <p class="p">You don’t need motivation. You just need a tiny start.</p>
+      
 
       <hr class="hr" />
 
       <p class="p"><strong>Task:</strong> ${escapeHtml(task)}</p>
       <p class="p"><strong>Feeling:</strong> ${labelEmotion(emotion)}</p>
+      <p class="p"><strong>Energy:</strong> ${labelEnergy(energy || "medium")}</p>
+
 
       <hr class="hr" />
 
@@ -73,6 +77,10 @@ function labelEmotion(e) {
     distracted: "Distracted",
   };
   return map[e] || e;
+}
+function labelEnergy(e) {
+  const map = { low: "Low", medium: "Medium", high: "High" };
+  return map[e] || "Medium";
 }
 
 
