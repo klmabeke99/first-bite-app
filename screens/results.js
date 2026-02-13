@@ -1,3 +1,5 @@
+import { buildPlan } from "../app/logic.js";
+
 import { getState, resetState } from "../app/state.js";
 
 export function renderResultsScreen() {
