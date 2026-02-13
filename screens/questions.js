@@ -34,6 +34,20 @@ export function renderQuestionsScreen() {
   </optgroup>
 </select>
 
+${isPremium() ? `
+  <label class="label" style="margin-top:12px;">Energy level right now</label>
+  <select class="select" id="energySelect">
+    <option value="low">Low</option>
+    <option value="medium" selected>Medium</option>
+    <option value="high">High</option>
+  </select>
+  <p class="small" style="opacity:.8;">Premium adapts the plan to your energy.</p>
+` : `
+  <p class="small" style="opacity:.75; margin-top:10px;">
+    Premium adds an energy-aware plan (low/medium/high).
+  </p>
+`}
+
 <p class="small" style="opacity:.8;">
   Premium unlocks deeper blockers (perfectionism, avoidance, low dopamine, distracted)
 </p>
