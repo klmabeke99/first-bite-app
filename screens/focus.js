@@ -54,6 +54,7 @@ export function renderFocusScreen() {
   `;
 
   const timeDisplay = document.getElementById("timeDisplay");
+  const ring = document.getElementById("ring");
   const startBtn = document.getElementById("startTimerBtn");
   const pauseBtn = document.getElementById("pauseTimerBtn");
   const resetBtn = document.getElementById("resetTimerBtn");
@@ -64,8 +65,17 @@ export function renderFocusScreen() {
   const sessionMsg = document.getElementById("sessionMsg");
 
   function renderTime() {
-    timeDisplay.textContent = formatTime(remaining);
-  }
+  timeDisplay.textContent = formatTime(remaining);
+
+  // Progress from 0 → 1 (time used)
+  const used = totalSeconds - remaining;
+  const progress = Math.min(Math.max(used / totalSeconds, 0), 1);
+  const deg = Math.round(progress * 360);
+
+  // Fill ring gently as time passes
+  ring.style.background = `conic-gradient(#111827 ${deg}deg, rgba(17,24,39,.10) ${deg}deg)`;
+}
+
 
   function showCompleteUI() {
     extraActions.style.display = "flex";
