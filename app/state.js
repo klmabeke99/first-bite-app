@@ -4,13 +4,14 @@ const defaultState = {
   task: "",
   emotion: "overwhelmed",
   sessionsCompleted: 0,
-
   streakDays: 0,
-  lastStreakDate: null,
+  lastSessionDate: null,
 
-  focusRemaining: 300,
+  focusRemaining: null,
   focusRunning: false,
   focusLastTick: null,
+
+  premiumUnlocked: false, // 👈 NEW
 };
 
 
