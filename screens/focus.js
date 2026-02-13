@@ -19,7 +19,14 @@ export function renderFocusScreen() {
       <p class="p"><strong>Task:</strong> ${escapeHtml(task)}</p>
 
       <div class="timer">
-        <div class="timer__time" id="timeDisplay">05:00</div>
+        <div class="ringWrap">
+  <div class="ring" id="ring">
+    <div class="ringInner">
+      <div class="timer__time" id="timeDisplay">05:00</div>
+    </div>
+  </div>
+</div>
+
 
         <div class="row">
           <button class="btn" id="startTimerBtn">Start Timer</button>
