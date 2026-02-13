@@ -2,8 +2,7 @@ import { getState, resetState } from "../app/state.js";
 
 export function renderResultsScreen() {
   const app = document.getElementById("app");
-  const { task, emotion, sessionsCompleted } = getState();
-
+const { task, emotion, sessionsCompleted, streakDays } = getState();
 
   const plan = buildPlan(task, emotion);
 
@@ -28,7 +27,9 @@ export function renderResultsScreen() {
       </ul>
 
       <p class="p"><strong>Gentle reframe:</strong> ${escapeHtml(plan.reframe)}</p>
-      <p class="small">Sessions completed so far: ${sessionsCompleted || 0}</p>
+     <p class="small">Sessions completed so far: ${sessionsCompleted || 0}</p>
+     <p class="small">Current streak: ${streakDays || 0} day${(streakDays || 0) === 1 ? "" : "s"}</p>
+
 
       <div class="row">
         <button class="btn secondary" id="backBtn">Back</button>
