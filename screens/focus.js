@@ -77,6 +77,14 @@ export function renderFocusScreen() {
   // Fill ring gently as time passes
  ring.style.background = `conic-gradient(var(--ringFill) ${deg}deg, var(--ringTrack) ${deg}deg)`;
 }
+  function persist(running) {
+  setState({
+    focusRemaining: remaining,
+    focusRunning: running,
+    focusLastTick: running ? Date.now() : null,
+  });
+}
+
   function showCompleteUI() {
     extraActions.style.display = "flex";
     statusMsg.style.display = "block";
