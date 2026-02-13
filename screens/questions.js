@@ -1,4 +1,6 @@
 import { setState, getState } from "../app/state.js";
+import { isPremium } from "../app/features.js";
+
 
 export function renderQuestionsScreen() {
   const app = document.getElementById("app");
@@ -13,13 +15,21 @@ export function renderQuestionsScreen() {
       <input class="input" id="taskInput" type="text" placeholder="e.g., Reply to the email" value="${escapeHtml(state.task)}" />
 
       <label class="label" for="emotionSelect">What feeling shows up?</label>
-      <select class="select" id="emotionSelect">
-        <option value="overwhelmed">Overwhelmed</option>
-        <option value="anxious">Anxious</option>
-        <option value="bored">Bored</option>
-        <option value="confused">Confused</option>
-        <option value="tired">Tired</option>
-      </select>
+     <select class="select" id="emotionSelect">
+  <option value="overwhelmed">Overwhelmed</option>
+  <option value="anxious">Anxious</option>
+  <option value="bored">Bored</option>
+  <option value="confused">Confused</option>
+  <option value="tired">Tired</option>
+
+  <optgroup label="Premium (locked)">
+    <option value="perfectionism" ${isPremium() ? "" : "disabled"}>Perfectionism</option>
+    <option value="avoidance" ${isPremium() ? "" : "disabled"}>Avoidance</option>
+    <option value="low_dopamine" ${isPremium() ? "" : "disabled"}>Low dopamine</option>
+    <option value="distracted" ${isPremium() ? "" : "disabled"}>Distracted</option>
+  </optgroup>
+</select>
+
 
       <div class="row">
         <button class="btn secondary" id="backBtn">Back</button>
