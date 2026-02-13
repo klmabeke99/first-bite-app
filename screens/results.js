@@ -67,9 +67,14 @@ function labelEmotion(e) {
     bored: "Bored",
     confused: "Confused",
     tired: "Tired",
+    perfectionism: "Perfectionism",
+    avoidance: "Avoidance",
+    low_dopamine: "Low dopamine",
+    distracted: "Distracted",
   };
-  return map[e] || "Overwhelmed";
+  return map[e] || e;
 }
+
 
 function escapeHtml(str) {
   return String(str || "")
