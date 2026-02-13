@@ -4,7 +4,12 @@ const defaultState = {
   task: "",
   emotion: "overwhelmed",
   sessionsCompleted: 0,
+
+  focusRemaining: 300,
+  focusRunning: false,
+  focusLastTick: null
 };
+
 
 export function getState() {
   try {
